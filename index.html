@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDO Mandaluyong Request Slip Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect fill="%23a8c8e0" width="1920" height="1080"/></svg>');
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(to right, #4a90e2, #357abd);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            border-bottom: 5px solid #2563a8;
+        }
+
+        .header-logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .header h2 {
+            color: white;
+            font-size: 24px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        .form-content {
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 0.3fr 1fr;
+            gap: 20px;
+        }
+
+        .name-group {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: normal;
+            font-size: 18px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-bottom: 2px solid #333;
+            background: transparent;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-bottom-color: #4a90e2;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .documents-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(240, 248, 255, 0.5);
+            border-radius: 20px;
+        }
+
+        .documents-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+            cursor: pointer;
+            border: 2px solid #333;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+            font-size: 16px;
+        }
+
+        .sub-options {
+            margin-left: 40px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .sub-options.active {
+            display: block;
+        }
+
+        .sub-checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .sub-checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .sub-checkbox-group label {
+            font-size: 15px;
+            color: #555;
+        }
+
+        .submit-btn {
+            width: 200px;
+            padding: 15px;
+            background: white;
+            color: #333;
+            border: 2px solid #333;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: normal;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Georgia', serif;
+        }
+
+        .submit-btn:hover {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: 2px solid #333;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: normal;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            font-family: 'Georgia', serif;
+        }
+
+        .btn-confirm {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        .btn-confirm:hover {
+            background: #357abd;
+            border-color: #357abd;
+        }
+
+        .btn-cancel {
+            background: white;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #f0f0f0;
+        }
+
+        .btn-ok {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+            padding: 12px 50px;
+        }
+
+        .btn-ok:hover {
+            background: #357abd;
+            border-color: #357abd;
+        }
+
+        .readonly-field {
+            background-color: transparent;
+            cursor: not-allowed;
+            color: #666;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-logos">
+                <div class="logo-placeholder">SDO LOGO</div>
+                <div>
+                    <h1>SDO MANDALUYONG</h1>
+                    <h2>REQUEST SLIP FORM</h2>
+                </div>
+                <div class="logo-placeholder">DEPED LOGO</div>
+            </div>
+        </div>
+
+        <div class="form-content">
+            <form id="documentForm">
+                <div class="form-group">
+                    <label>Name: <span class="required">*</span></label>
+                    <div class="name-row">
+                        <div class="name-group">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                        </div>
+                        <div class="name-group">
+                            <input type="text" id="middleInitial" name="middleInitial" placeholder="M.I." maxlength="2" style="text-align: center;">
+                        </div>
+                        <div class="name-group">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="position">Position: <span class="required">*</span></label>
+                    <input type="text" id="position" name="position" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="school">School: <span class="required">*</span></label>
+                    <select id="school" name="school" required>
+                        <option value="">-- Select School --</option>
+                        <option value="Academia Progresiva De Manila Inc.">Academia Progresiva De Manila Inc.</option>
+                        <option value="Addition Hills IS">Addition Hills IS</option>
+                        <option value="Amado T. Reyes Child Study Center Inc.">Amado T. Reyes Child Study Center Inc.</option>
+                        <option value="Amado T. Reyes ES">Amado T. Reyes ES</option>
+                        <option value="Andres Bonifacio IS">Andres Bonifacio IS</option>
+                        <option value="Angeli Dei School Inc.">Angeli Dei School Inc.</option>
+                        <option value="Arellano University Plaridel Campus">Arellano University Plaridel Campus</option>
+                        <option value="Bonifacio Javier NHS">Bonifacio Javier NHS</option>
+                        <option value="Cascades School Inc.">Cascades School Inc.</option>
+                        <option value="City of Mandaluyong Science HS">City of Mandaluyong Science HS</option>
+                        <option value="Clayton Learning Center Philippines Inc.">Clayton Learning Center Philippines Inc.</option>
+                        <option value="Curum Christian School">Curum Christian School</option>
+                        <option value="Doña Basilisa Yangco ES">Doña Basilisa Yangco ES</option>
+                        <option value="Doña Pilar C. Gonzaga ES">Doña Pilar C. Gonzaga ES</option>
+                        <option value="Don Bosco Technical College">Don Bosco Technical College</option>
+                        <option value="Esperanza Kids Castle Learning Center Inc.">Esperanza Kids Castle Learning Center Inc.</option>
+                        <option value="Eulogio Rodriguez IS">Eulogio Rodriguez IS</option>
+                        <option value="Filemon P. Javier ES">Filemon P. Javier ES</option>
+                        <option value="Future Minds Academy of Mandaluyong Inc.">Future Minds Academy of Mandaluyong Inc.</option>
+                        <option value="Gateways Institute of Science and Technology">Gateways Institute of Science and Technology</option>
+                        <option value="Good Shepherd Christian School">Good Shepherd Christian School</option>
+                        <option value="Headstart Schools of Mandaluyong">Headstart Schools of Mandaluyong</option>
+                        <option value="Highway Hills IS">Highway Hills IS</option>
+                        <option value="Holistic Education Montesorri Inc.">Holistic Education Montesorri Inc.</option>
+                        <option value="Hulo Integrated School">Hulo Integrated School</option>
+                        <option value="Hulo IS">Hulo IS</option>
+                        <option value="Ilaya Barangka IS">Ilaya Barangka IS</option>
+                        <option value="Independent Living Center">Independent Living Center</option>
+                        <option value="International Baptist College">International Baptist College</option>
+                        <option value="International Training Center and Hospitality Institute">International Training Center and Hospitality Institute</option>
+                        <option value="Isaac Lopez IS">Isaac Lopez IS</option>
+                        <option value="Jose Fabella MS">Jose Fabella MS</option>
+                        <option value="Jose Rizal University">Jose Rizal University</option>
+                        <option value="Keys School Manila">Keys School Manila</option>
+                        <option value="KIDS Integral Development through Skillful Learning">KIDS Integral Development through Skillful Learning</option>
+                        <option value="Kids Center">Kids Center</option>
+                        <option value="Kites and Strings Learning Center Inc.">Kites and Strings Learning Center Inc.</option>
+                        <option value="La Salle Green Hills">La Salle Green Hills</option>
+                        <option value="Lead Educational High School Inc.">Lead Educational High School Inc.</option>
+                        <option value="Little Thams Learning Center">Little Thams Learning Center</option>
+                        <option value="Living Stones Christian Academy Mandaluyong, Inc.">Living Stones Christian Academy Mandaluyong, Inc.</option>
+                        <option value="Lourdes School of Mandaluyong">Lourdes School of Mandaluyong</option>
+                        <option value="Makati Hope Christian School Inc.">Makati Hope Christian School Inc.</option>
+                        <option value="Mandaluyong Addition Hills ES">Mandaluyong Addition Hills ES</option>
+                        <option value="Mandaluyong ES">Mandaluyong ES</option>
+                        <option value="Mandaluyong HS">Mandaluyong HS</option>
+                        <option value="Maranatha Christian Academy of Mandaluyong City, Inc.">Maranatha Christian Academy of Mandaluyong City, Inc.</option>
+                        <option value="Mataas na Paaralang Neptali A. Gonzales">Mataas na Paaralang Neptali A. Gonzales</option>
+                        <option value="Mulberry Learning">Mulberry Learning</option>
+                        <option value="Nueve de Febrero ES">Nueve de Febrero ES</option>
+                        <option value="Our Lady of Guadalupe Colleges Inc.">Our Lady of Guadalupe Colleges Inc.</option>
+                        <option value="Pedro P. Cruz ES">Pedro P. Cruz ES</option>
+                        <option value="Plainview ES">Plainview ES</option>
+                        <option value="Pleasant Hills ES">Pleasant Hills ES</option>
+                        <option value="Precious Saviour and Redeemer Academy">Precious Saviour and Redeemer Academy</option>
+                        <option value="Rainbow Room Learning Center Inc.">Rainbow Room Learning Center Inc.</option>
+                        <option value="Renato Lopez ES">Renato Lopez ES</option>
+                        <option value="Rizal Technological University">Rizal Technological University</option>
+                        <option value="Saint John Bosco Institute of Arts and Sciences Inc.">Saint John Bosco Institute of Arts and Sciences Inc.</option>
+                        <option value="San Felipe Neri Catholic School">San Felipe Neri Catholic School</option>
+                        <option value="Senate President Neptali A. Gonzales">Senate President Neptali A. Gonzales</option>
+                        <option value="Smart Kids Learning Center">Smart Kids Learning Center</option>
+                        <option value="St. Anthony of Makati Montersorri School">St. Anthony of Makati Montersorri School</option>
+                        <option value="St. Therese Private School, Inc.">St. Therese Private School, Inc.</option>
+                        <option value="Urban School for Children">Urban School for Children</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="text" id="date" name="date" class="readonly-field" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="time">Time:</label>
+                    <input type="text" id="time" name="time" class="readonly-field" readonly>
+                </div>
+
+                <div class="documents-section">
+                    <h3>Checklist: <span class="required">*</span></h3>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc1" name="documents" value="Certificate of Employment">
+                        <label for="doc1">Certificate of Employment</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc2" name="documents" value="Certificate of Employment w/ compensation">
+                        <label for="doc2">Certificate of Employment w/ compensation</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc3" name="documents" value="Service Record (SR)">
+                        <label for="doc3">Service Record (SR)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc4" name="documents" value="Leave W/O Pay (LWOP Certificate)">
+                        <label for="doc4">Leave W/O Pay (LWOP Certificate)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc5" name="documents" value="Change Name (RPSU)">
+                        <label for="doc5">Change Name (RPSU)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc6" name="documents" value="PAG-IBIG Remittance Certificate">
+                        <label for="doc6">PAG-IBIG Remittance Certificate</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc7" name="documents" value="PHILHEALTH Remittance Certificate">
+                        <label for="doc7">PHILHEALTH Remittance Certificate</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="doc8" name="documents" value="GSIS Concern">
+                        <label for="doc8">GSIS Concern</label>
+                    </div>
+                    <div class="sub-options" id="gsisSubOptions">
+                        <div class="sub-checkbox-group">
+                            <input type="checkbox" id="gsis1" name="gsisOptions" value="Remittance Certificate">
+                            <label for="gsis1">Remittance Certificate</label>
+                        </div>
+                        <div class="sub-checkbox-group">
+                            <input type="checkbox" id="gsis2" name="gsisOptions" value="Change Name">
+                            <label for="gsis2">Change Name</label>
+                        </div>
+                        <div class="sub-checkbox-group">
+                            <input type="checkbox" id="gsis3" name="gsisOptions" value="Change Date of Birth">
+                            <label for="gsis3">Change Date of Birth</label>
+                        </div>
+                        <div class="sub-checkbox-group">
+                            <input type="checkbox" id="gsis4" name="gsisOptions" value="Change Status">
+                            <label for="gsis4">Change Status</label>
+                        </div>
+                        <div class="sub-checkbox-group">
+                            <input type="checkbox" id="gsis5" name="gsisOptions" value="Update Mobile/Home Address">
+                            <label for="gsis5">Update Mobile/Home Address</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Submission</h2>
+            <p>Are you sure you want to submit this document request?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+                <button class="modal-btn btn-confirm" onclick="confirmSubmit()">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>Submission Successful!</h2>
+            <p>Your request has been submitted. Please wait patiently.</p>
+            <button class="modal-btn btn-ok" onclick="closeSuccessModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-fill date and time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date as MM/DD/YYYY
+            const date = now.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Format time as HH:MM AM/PM
+            const time = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            document.getElementById('date').value = date;
+            document.getElementById('time').value = time;
+        }
+
+        // Update date/time on page load
+        updateDateTime();
+
+        // Sort school dropdown alphabetically
+        document.addEventListener("DOMContentLoaded", function () {
+            const select = document.getElementById("school");
+            const options = Array.from(select.options).slice(1);
+            options.sort((a, b) => a.text.localeCompare(b.text));
+            options.forEach(option => select.appendChild(option));
+        });
+
+        // Toggle GSIS sub-options
+        document.getElementById('doc8').addEventListener('change', function() {
+            const subOptions = document.getElementById('gsisSubOptions');
+            if (this.checked) {
+                subOptions.classList.add('active');
+            } else {
+                subOptions.classList.remove('active');
+                // Uncheck all sub-options when main checkbox is unchecked
+                document.querySelectorAll('input[name="gsisOptions"]').forEach(cb => {
+                    cb.checked = false;
+                });
+            }
+        });
+
+        // Form submission handler
+        document.getElementById('documentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Check if at least one document is selected
+            const checkboxes = document.querySelectorAll('input[name="documents"]:checked');
+            if (checkboxes.length === 0) {
+                alert('Please select at least one document from the checklist.');
+                return;
+            }
+            
+            // Show confirmation modal
+            document.getElementById('confirmModal').classList.add('active');
+        });
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        function confirmSubmit() {
+            closeConfirmModal();
+            
+            // Get form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                middleInitial: document.getElementById('middleInitial').value,
+                lastName: document.getElementById('lastName').value,
+                position: document.getElementById('position').value,
+                school: document.getElementById('school').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                documents: []
+            };
+            
+            // Get selected documents
+            const checkboxes = document.querySelectorAll('input[name="documents"]:checked');
+            checkboxes.forEach(cb => {
+                formData.documents.push(cb.value);
+            });
+            
+            // Get selected GSIS sub-options if GSIS Concern is checked
+            if (document.getElementById('doc8').checked) {
+                const gsisOptions = [];
+                document.querySelectorAll('input[name="gsisOptions"]:checked').forEach(cb => {
+                    gsisOptions.push(cb.value);
+                });
+                if (gsisOptions.length > 0) {
+                    formData.gsisOptions = gsisOptions;
+                }
+            }
+            
+            // In real implementation, send data to Google Sheets here
+            // await fetch(GOOGLE_APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(formData) });
+            
+            console.log('Form submitted:', formData);
+            
+            // Show success modal
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+            
+            // Reset form
+            document.getElementById('documentForm').reset();
+            
+            // Update date/time again for next user
+            updateDateTime();
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeConfirmModal();
+            }
+        });
+    </script>
+</body>
+</html>
